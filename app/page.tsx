@@ -1,27 +1,41 @@
-import Image from "next/image";
-import React from "react";
+import CoinOverview from "@/components/home/CoinOverview";
+import {
+  CoinOverviewFallback,
+  TrendingCoinsFallback,
+} from "@/components/home/fallbacks";
+import TrendingCoins from "@/components/home/TrendingCoins";
+import { Suspense } from "react";
 
-const page = () => {
+const Page = async () => {
+  //----symbol of coin
+
+  //trading coins list
+
   return (
     <main className="main-conatainer">
       <section className="home-grid">
-        <div id="coin-overview">
-          <div className="header pt-2">
-            <Image
-              src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png"
-              alt="Bitcoin"
-              width={56}
-              height={56}
-            />
-            <div className="info">
-              <p>BitCoin / BTC</p>
-              <h1>$89,113.00</h1>
+        {/* Coin Overview */}
+        <Suspense
+          fallback={
+            <div>
+              <CoinOverviewFallback />
             </div>
-          </div>
-        </div>
-
-        <p>Trending Coins</p>
+          }
+        >
+          <CoinOverview />
+        </Suspense>
+        {/* Trending Table of Crypto Coins */}
+        <Suspense
+          fallback={
+            <div>
+              <TrendingCoinsFallback />
+            </div>
+          }
+        >
+          <TrendingCoins />
+        </Suspense>
       </section>
+      {/* List of Categories */}
       <section className="w-full mt-7 space-y-4">
         <p>Categories</p>
       </section>
@@ -29,4 +43,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
