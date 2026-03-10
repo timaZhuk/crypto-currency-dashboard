@@ -34,7 +34,7 @@ const CandlestickChart = ({
     ISeriesApi<"Candlestick"> | ISeriesApi<"Bar"> | null
   >(null);
 
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const [period, setPeriod] = useState(initialPeriod);
   const [ohlcData, setOhlcData] = useState<OHLCData[]>(data ?? []);
   const [isPending, startTransition] = useTransition();
@@ -124,7 +124,7 @@ const CandlestickChart = ({
                 period === value ? "config-button-active" : "config-button"
               }
               onClick={() => handlePeriodChange(value)}
-              disabled={loading}
+              disabled={isPending}
             >
               {label}
             </button>
