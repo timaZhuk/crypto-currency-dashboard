@@ -5,13 +5,20 @@ import Link from "next/link";
 import React from "react";
 import DataTable from "../DataTable";
 import { cn } from "@/lib/utils";
+import { TrendingCoinsFallback } from "./fallbacks";
 
 //-------------------------------------------
 const TrendingCoins = async () => {
-  const trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
-    "/search/trending",
-    undefined,
-  );
+  let trendingCoins;
+  try {
+    trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
+      "/search/trending",
+      undefined,
+    );
+  } catch (error) {
+    console.error("error fetching trending coins: ", error);
+    return <TrendingCoinsFallback />;
+  }
 
   //columns description
   const columns: DataTableColumn<TrendingCoin>[] = [
