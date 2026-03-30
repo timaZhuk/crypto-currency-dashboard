@@ -40,11 +40,12 @@ const CandlestickChart = ({
   const [isPending, startTransition] = useTransition();
   const [bars, setBars] = useState(false);
 
-  //Toggle change the bar/candle charts
+  //---Toggle change the bar/candle charts
   function changeGraphSereies() {
     setBars((prev) => !prev);
   }
 
+  //---Get data from API for selected period
   const fetchOHLCData = async (selectedPeriod: Period) => {
     try {
       const config = PERIOD_CONFIG[selectedPeriod];
@@ -61,6 +62,7 @@ const CandlestickChart = ({
     }
   };
 
+  //---- we call fetchOHLCData with new period
   const handlePeriodChange = (newPeriod: Period) => {
     if (newPeriod === period) return;
     startTransition(async () => {
@@ -69,6 +71,7 @@ const CandlestickChart = ({
     });
   };
 
+  //-----
   useEffect(() => {
     const container = chartContainerRef.current;
     if (!container) return;
@@ -124,7 +127,7 @@ const CandlestickChart = ({
                 period === value ? "config-button-active" : "config-button"
               }
               onClick={() => handlePeriodChange(value)}
-              disabled={loading}
+              disabled={isPending}
             >
               {label}
             </button>
